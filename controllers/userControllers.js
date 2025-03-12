@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
 
+
 const signUp = async (req, res) => {
     try {
         // console.log("start");
@@ -61,16 +62,18 @@ const signIn = async (req, res) => {
 const profile = async (req, res) => {
 
     try {
-        console.log(req.user)
-        res.status(201).json({ message: "User Profile Seen Successfully." });
-
+        // console.log(req.user.name);
+        let profileData = await req.user;
+        let userProfileData = await ({
+            name: profileData.name,
+            email: profileData.email,
+            post: profileData.post,
+        });
+        res.status(201).json({ userProfileData });
 
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
-
-
-
 }
 
 module.exports = { signUp, signIn, profile };
