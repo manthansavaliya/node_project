@@ -1,6 +1,6 @@
 const express = require('express');
 const { signUp, signIn, profile } = require('../controllers/userControllers.js');
-const { createPost, updatePost } = require('../controllers/postControllers.js');
+const { createPost, updatePost, deletePost, getOnePost, getAllPost } = require('../controllers/postControllers.js');
 const { jwtAuthorize } = require('../middleware/jwt.js')
 const routes = express.Router();
 const multer = require('multer');
@@ -22,7 +22,11 @@ routes.use('/sign-in', signIn);
 routes.use('/profile', jwtAuthorize, profile);
 
 routes.use('/create', jwtAuthorize, upload.single('image'), createPost);
-routes.use('/update', jwtAuthorize, updatePost);
+routes.use('/update/:_id', jwtAuthorize, updatePost);
+routes.use('/delete/:_id', jwtAuthorize, deletePost);
+routes.use('/find-one-post/:_id', jwtAuthorize, getOnePost);
+routes.use('/find-all-post', jwtAuthorize, getAllPost);
+
 
 
 module.exports = routes, upload;

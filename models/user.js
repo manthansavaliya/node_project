@@ -8,8 +8,8 @@ const schema = new mongoose.Schema({
     age: Number,
     acceptPrivacyPolicy: Number, // 0=true,1=false
     post: [ {
-        type: mongoose.Types.ObjectId,
-        // ref:
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post"
     },
     {
         timestamps: true

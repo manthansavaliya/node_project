@@ -9,7 +9,7 @@ const jwtAuthorize = async (req, res, next) => {
         // console.log(finalToken)
 
         let decode = jwt.verify(finalToken, 'token@');
-
+        // console.log(decode)
         const user = await User.findOne({ _id: decode._id })
 
         if (!user) {
