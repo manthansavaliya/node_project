@@ -4,7 +4,10 @@ const schema = new mongoose.Schema({
     titleName: String,
     description: String,
     image: String,
-    userId: String
+    user: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    } ]
 }, {
     timestamps: true
 });

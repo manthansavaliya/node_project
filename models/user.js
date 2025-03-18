@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
     password: String,
     confirmPassword: String,
     age: Number,
-    acceptPrivacyPolicy: Number, // 0=true,1=false
+    acceptPrivacyPolicy: Number, // 0=true , 1=false
     post: [ {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post"

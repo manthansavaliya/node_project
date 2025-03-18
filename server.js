@@ -8,7 +8,7 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-    res.send('Hello User.')
+    res.send('Welcome To DataPost Website.')
 })
 app.use('/', routes);
 

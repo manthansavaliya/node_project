@@ -1,20 +1,19 @@
-const express = require('express');
 const Post = require('../models/post.js');
-const multer = require('multer');
 const upload = require('../router/userRoutes.js');
+const User = require('../models/user.js');
 const createPost = async (req, res) => {
     try {
-        console.log("start")
         const userPostData = req.body;
         let postFile = req.file;
-        // console.log(postFile)
         const { titleName, description, image } = userPostData;
 
         let post = new Post({
             titleName,
             description,
             image: postFile.originalname,
+            user: [ req.user._id ]
         });
+
 
         await post.save();
 
@@ -28,10 +27,7 @@ const createPost = async (req, res) => {
 
 const updatePost = async (req, res) => {
     try {
-        // console.log("start")
         const userPostData = req.body;
-        // console.log(req.body)
-        // console.log(req.params)
         const { titleName, description } = userPostData;
 
         const newPostData = await Post.findByIdAndUpdate({ _id: req.params._id }, {
@@ -46,12 +42,13 @@ const updatePost = async (req, res) => {
 }
 const deletePost = async (req, res) => {
     try {
-        // console.log("start")
 
         const newPostData = await Post.findByIdAndDelete({ _id: req.params._id }, {
         })
 
         res.status(201).json({ message: "Post Deleted Successfully." });
+
+
 
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -59,11 +56,8 @@ const deletePost = async (req, res) => {
 }
 const getOnePost = async (req, res) => {
     try {
-        // console.log("start")
-
-        const newPostData = await Post.findOne({ _id: req.params._id }, {
-        })
-        // console.log(newPostData)
+        let _id = req.params._id;
+        const newPostData = await Post.findOne({ _id }).populate('user').exec();
 
         res.status(201).json({ message: newPostData });
 
@@ -73,10 +67,8 @@ const getOnePost = async (req, res) => {
 }
 const getAllPost = async (req, res) => {
     try {
-        // console.log("start")
 
-        const newPostData = await Post.list;
-        // console.log(newPostData)
+        const newPostData = await Post.find();
 
         res.status(201).json({ message: newPostData });
 

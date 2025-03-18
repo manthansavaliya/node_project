@@ -21,11 +21,11 @@ routes.use('/sign-up', signUp);
 routes.use('/sign-in', signIn);
 routes.use('/profile', jwtAuthorize, profile);
 
-routes.use('/create', jwtAuthorize, upload.single('image'), createPost);
+routes.post('/create', jwtAuthorize, upload.single('image'), createPost);
 routes.use('/update/:_id', jwtAuthorize, updatePost);
 routes.use('/delete/:_id', jwtAuthorize, deletePost);
-routes.use('/find-one-post/:_id', jwtAuthorize, getOnePost);
-routes.use('/find-all-post', jwtAuthorize, getAllPost);
+routes.get('/find-one-post/:_id', jwtAuthorize, getOnePost);
+routes.get('/find-all-post', jwtAuthorize, getAllPost);
 
 
 

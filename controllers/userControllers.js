@@ -6,12 +6,9 @@ const User = require('../models/user.js');
 
 const signUp = async (req, res) => {
     try {
-        // console.log("start");
         const userdata = req.body;
-        // console.log(userdata);
         const { name, email, password, confirmPassword, age, acceptPrivacyPolicy } = userdata;
         const newPassword = await bcrypt.hash(password, 10);
-        // console.log(newPassword);
 
         let user = new User({
             name,
@@ -38,7 +35,6 @@ const signIn = async (req, res) => {
         const { email, password } = userdata;
 
         const newUser = await User.findOne({ email });
-        // console.log(newUser)
         if (!newUser) {
             return res.send({ error: "User Is Not Found In List." });
         }
@@ -47,10 +43,8 @@ const signIn = async (req, res) => {
         if (!passMatch) {
             return res.send({ error: "Password Is Not Match." });
         }
-        // console.log(passMatch)
 
-        const token = await jwt.sign({ _id: newUser._id }, 'token@')
-        console.log(token)
+        const token = await jwt.sign({ _id: newUser._id }, 'token@');
 
         res.status(201).json({ message: "User Login Successfully.", token });
 
@@ -62,7 +56,6 @@ const signIn = async (req, res) => {
 const profile = async (req, res) => {
 
     try {
-        // console.log(req.user.name);
         let profileData = await req.user;
         let userProfileData = await ({
             name: profileData.name,
